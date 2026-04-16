@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Degree Grade Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f7f5f0;
+    --surface: #ffffff;
+    --surface2: #f0ede6;
+    --border: rgba(0,0,0,0.1);
+    --border-strong: rgba(0,0,0,0.18);
+    --text: #1a1814;
+    --text-2: #5a5650;
+    --text-3: #9a9590;
+    --accent: #1a3a2a;
+    --accent-light: #e8f0eb;
+    --first: #1a4a2a;
+    --first-bg: #e2f0e6;
+    --upper: #1a2a4a;
+    --upper-bg: #e2e8f0;
+    --lower: #3a2a10;
+    --lower-bg: #f0e8d8;
+    --third: #4a1a1a;
+    --third-bg: #f0e0e0;
+    --fail: #3a1a1a;
+    --fail-bg: #f0d8d8;
+    --radius: 14px;
+    --radius-sm: 8px;
+    --shadow: 0 2px 16px rgba(0,0,0,0.07);
+  }
+
+  body {
+    font-family: 'DM Mono', monospace;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding-bottom: 3rem;
+  }
+
+  header {
+    background: var(--accent);
+    color: #fff;
+    padding: 2rem 1.25rem 1.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  header h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(1.4rem, 5vw, 1.9rem);
+    letter-spacing: -0.01em;
+    margin-bottom: 0.2rem;
+  }
+
+  header p {
+    font-size: 11px;
+    opacity: 0.6;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .summary-bar {
+    background: var(--accent);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid rgba(255,255,255,0.12);
+    padding: 0 1.25rem;
+  }
+
+  .sum-cell {
+    padding: 0.85rem 0;
+    text-align: center;
+  }
+
+  .sum-cell:not(:last-child) {
+    border-right: 1px solid rgba(255,255,255,0.12);
+  }
+
+  .sum-val {
+    font-size: clamp(1.1rem, 4vw, 1.4rem);
+    font-weight: 500;
+    color: #fff;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .sum-lbl {
+    font-size: 9px;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .cls-pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.04em;
+  }
+
+  .main { padding: 1.25rem; max-width: 640px; margin: 0 auto; }
+
+  .year-section { margin-bottom: 1.5rem; }
+
+  .year-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+  }
+
+  .year-title {
+    font-family: 'Fraunces', serif;
+    font-size: 1.15rem;
+    font-weight: 300;
+    color: var(--text);
+  }
+
+  .year-avg-badge {
+    font-size: 11px;
+    color: var(--text-2);
+    background: var(--surface2);
+    border-radius: 20px;
+    padding: 3px 10px;
+  }
+
+  .year-weight {
+    font-size: 10px;
+    color: var(--text-3);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .module-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 0.75rem;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+
+  .module-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0.9rem 1rem;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .module-head:active { background: var(--surface2); }
+
+  .mod-name-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    cursor: text;
+    outline: none;
+    min-width: 0;
+  }
+
+  .mod-name-input::placeholder { color: var(--text-3); font-weight: 400; }
+
+  .mod-avg {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    white-space: nowrap;
+  }
+
+  .mod-toggle {
+    font-size: 16px;
+    color: var(--text-3);
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+
+  .mod-toggle.open { transform: rotate(180deg); }
+
+  .progress-track {
+    height: 3px;
+    background: var(--surface2);
+    margin: 0 1rem;
+  }
+
+  .progress-fill {
+    height: 3px;
+    border-radius: 2px;
+    transition: width 0.35s ease;
+  }
+
+  .module-body {
+    display: none;
+    padding: 0.85rem 1rem 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .module-body.open { display: block; }
+
+  .assessment-row {
+    display: grid;
+    grid-template-columns: 1fr 70px 70px 32px;
+    gap: 6px;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+
+  .ass-input {
+    background: var(--surface2);
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    padding: 7px 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--text);
+    width: 100%;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  .ass-input:focus { border-color: var(--border-strong); background: var(--surface); }
+  .ass-input::placeholder { color: var(--text-3); }
+  .ass-input[type="number"] { text-align: right; }
+
+  .ass-label {
+    font-size: 10px;
+    color: var(--text-3);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+    padding-left: 2px;
+  }
+
+  .del-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-3);
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+    padding: 4px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .del-btn:hover { color: #c0392b; background: #fdf0f0; }
+
+  .add-ass-btn {
+    margin-top: 10px;
+    width: 100%;
+    background: transparent;
+    border: 1px dashed var(--border-strong);
+    border-radius: var(--radius-sm);
+    padding: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--text-2);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .add-ass-btn:hover { background: var(--surface2); }
+
+  .weight-warning {
+    font-size: 11px;
+    color: #b07820;
+    background: #fdf5e0;
+    border-radius: var(--radius-sm);
+    padding: 6px 10px;
+    margin-top: 8px;
+    display: none;
+  }
+
+  .mod-del-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 12px;
+    background: transparent;
+    border: 1px solid #f0d8d8;
+    border-radius: var(--radius-sm);
+    padding: 7px 12px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: #c0392b;
+    cursor: pointer;
+  }
+
+  .mod-del-btn:hover { background: #fdf0f0; }
+
+  .add-module-btn {
+    width: 100%;
+    background: transparent;
+    border: 1px dashed var(--border-strong);
+    border-radius: var(--radius);
+    padding: 12px;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--text-2);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .add-module-btn:hover { background: var(--surface); }
+
+  .targets-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    margin-top: 0.5rem;
+  }
+
+  .target-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 11px 1rem;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+
+  .target-row:last-child { border-bottom: none; }
+
+  .target-cls { color: var(--text); }
+  .target-need { color: var(--text-2); text-align: right; font-size: 12px; }
+  .target-need.good { color: #1a6a2a; font-weight: 500; }
+  .target-need.warn { color: #b07820; }
+  .target-need.bad { color: #c0392b; }
+
+  .col-headers {
+    display: grid;
+    grid-template-columns: 1fr 70px 70px 32px;
+    gap: 6px;
+    margin-bottom: 2px;
+  }
+
+  .section-sep {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 1.5rem 0 0.85rem;
+  }
+
+  .section-sep-line { flex: 1; height: 1px; background: var(--border); }
+  .section-sep-text { font-size: 10px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-3); white-space: nowrap; }
+
+  @media (max-width: 400px) {
+    .assessment-row { grid-template-columns: 1fr 60px 60px 28px; gap: 4px; }
+    .col-headers { grid-template-columns: 1fr 60px 60px 28px; gap: 4px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Grade Tracker</h1>
+  <p>Kingston University &mdash; 25% Y2 / 75% Y3</p>
+  <div class="summary-bar">
+    <div class="sum-cell">
+      <span class="sum-val" id="hdr-y2">—</span>
+      <span class="sum-lbl">Year 2</span>
+    </div>
+    <div class="sum-cell">
+      <span class="sum-val" id="hdr-y3">—</span>
+      <span class="sum-lbl">Year 3</span>
+    </div>
+    <div class="sum-cell">
+      <span class="sum-val" id="hdr-final">—</span>
+      <span class="sum-lbl">Final</span>
+      <div><span class="cls-pill" id="hdr-cls" style="background:rgba(255,255,255,0.12);color:rgba(255,255,255,0.5)">—</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="main">
+
+  <!-- YEAR 1 -->
+  <div class="year-section">
+    <div class="section-sep">
+      <div class="section-sep-line"></div>
+      <div class="section-sep-text">Year 1 &mdash; 0% weight (pass/fail)</div>
+      <div class="section-sep-line"></div>
+    </div>
+    <div class="year-header">
+      <span class="year-title">Year 1</span>
+      <span class="year-avg-badge" id="y1-avg-badge">avg —</span>
+    </div>
+    <div id="y1-modules"></div>
+    <button class="add-module-btn" onclick="addModule(1)">+ add module</button>
+  </div>
+
+  <!-- YEAR 2 -->
+  <div class="year-section">
+    <div class="section-sep">
+      <div class="section-sep-line"></div>
+      <div class="section-sep-text">Year 2 &mdash; 25% weight</div>
+      <div class="section-sep-line"></div>
+    </div>
+    <div class="year-header">
+      <span class="year-title">Year 2</span>
+      <span class="year-avg-badge" id="y2-avg-badge">avg —</span>
+    </div>
+    <div id="y2-modules"></div>
+    <button class="add-module-btn" onclick="addModule(2)">+ add module</button>
+  </div>
+
+  <!-- YEAR 3 -->
+  <div class="year-section">
+    <div class="section-sep">
+      <div class="section-sep-line"></div>
+      <div class="section-sep-text">Year 3 &mdash; 75% weight</div>
+      <div class="section-sep-line"></div>
+    </div>
+    <div class="year-header">
+      <span class="year-title">Year 3</span>
+      <span class="year-avg-badge" id="y3-avg-badge">avg —</span>
+    </div>
+    <div id="y3-modules"></div>
+    <button class="add-module-btn" onclick="addModule(3)">+ add module</button>
+  </div>
+
+  <!-- TARGETS -->
+  <div class="section-sep">
+    <div class="section-sep-line"></div>
+    <div class="section-sep-text">Target analysis</div>
+    <div class="section-sep-line"></div>
+  </div>
+  <div class="targets-card" id="targets-card">
+    <div class="target-row"><span class="target-cls">First (70%+)</span><span class="target-need" id="t-first">enter grades</span></div>
+    <div class="target-row"><span class="target-cls">Upper 2:1 (60%+)</span><span class="target-need" id="t-21">enter grades</span></div>
+    <div class="target-row"><span class="target-cls">Lower 2:2 (50%+)</span><span class="target-need" id="t-22">enter grades</span></div>
+    <div class="target-row"><span class="target-cls">Third (40%+)</span><span class="target-need" id="t-third">enter grades</span></div>
+  </div>
+
+</div>
+
+<script>
+let state = { 1: [], 2: [], 3: [] };
+let nextModId = 1;
+let nextAssId = 1;
+
+function makeAssessment(name='', grade='', weight='') {
+  return { id: nextAssId++, name, grade, weight };
+}
+
+function makeModule(year, name='') {
+  return {
+    id: nextModId++,
+    year,
+    name,
+    open: true,
+    assessments: [makeAssessment('Exam', '', ''), makeAssessment('Coursework', '', '')]
+  };
+}
+
+function addModule(year) {
+  state[year].push(makeModule(year));
+  render();
+}
+
+function removeModule(year, modId) {
+  state[year] = state[year].filter(m => m.id !== modId);
+  render();
+}
+
+function addAssessment(year, modId) {
+  const mod = state[year].find(m => m.id === modId);
+  if (mod) mod.assessments.push(makeAssessment());
+  render();
+}
+
+function removeAssessment(year, modId, assId) {
+  const mod = state[year].find(m => m.id === modId);
+  if (mod) mod.assessments = mod.assessments.filter(a => a.id !== assId);
+  render();
+}
+
+function toggleModule(year, modId) {
+  const mod = state[year].find(m => m.id === modId);
+  if (mod) mod.open = !mod.open;
+  render();
+}
+
+function updateModName(year, modId, val) {
+  const mod = state[year].find(m => m.id === modId);
+  if (mod) mod.name = val;
+  recalculate();
+}
+
+function updateAss(year, modId, assId, field, val) {
+  const mod = state[year].find(m => m.id === modId);
+  if (!mod) return;
+  const ass = mod.assessments.find(a => a.id === assId);
+  if (ass) ass[field] = val;
+  recalculate();
+}
+
+function calcModuleAvg(mod) {
+  const filled = mod.assessments.filter(a => a.grade !== '' && a.weight !== '' && !isNaN(parseFloat(a.grade)) && !isNaN(parseFloat(a.weight)));
+  if (!filled.length) return null;
+  const totalWeight = filled.reduce((s, a) => s + parseFloat(a.weight), 0);
+  if (totalWeight === 0) return null;
+  const weighted = filled.reduce((s, a) => s + parseFloat(a.grade) * parseFloat(a.weight), 0);
+  return weighted / totalWeight;
+}
+
+function calcYearAvg(year) {
+  const mods = state[year];
+  const avgs = mods.map(calcModuleAvg).filter(v => v !== null);
+  if (!avgs.length) return null;
+  return avgs.reduce((s, v) => s + v, 0) / avgs.length;
+}
+
+function totalWeight(mod) {
+  return mod.assessments.filter(a => a.weight !== '' && !isNaN(parseFloat(a.weight))).reduce((s, a) => s + parseFloat(a.weight), 0);
+}
+
+function gradeColor(g) {
+  if (g >= 70) return '#1a6a2a';
+  if (g >= 60) return '#185a9a';
+  if (g >= 50) return '#a07010';
+  if (g >= 40) return '#a03010';
+  return '#c0392b';
+}
+
+function classify(g) {
+  if (g >= 70) return { label: 'First', bg: '#e2f0e6', color: '#1a4a2a' };
+  if (g >= 60) return { label: 'Upper 2:1', bg: '#e2e8f0', color: '#1a2a4a' };
+  if (g >= 50) return { label: 'Lower 2:2', bg: '#f0e8d8', color: '#3a2a10' };
+  if (g >= 40) return { label: 'Third', bg: '#f0e0e0', color: '#4a1a1a' };
+  return { label: 'Fail', bg: '#f0d0d0', color: '#5a0a0a' };
+}
+
+function fmt(v) { return v !== null ? v.toFixed(1) + '%' : '—'; }
+
+function renderModules(year) {
+  const cont = document.getElementById(`y${year}-modules`);
+  cont.innerHTML = '';
+  state[year].forEach(mod => {
+    const avg = calcModuleAvg(mod);
+    const tw = totalWeight(mod);
+    const showWarning = tw > 0 && Math.abs(tw - 100) > 0.5;
+    const card = document.createElement('div');
+    card.className = 'module-card';
+    const barPct = avg !== null ? Math.min(avg, 100) : 0;
+    const barColor = avg !== null ? gradeColor(avg) : '#ddd';
+
+    card.innerHTML = `
+      <div class="module-head" onclick="toggleModule(${year}, ${mod.id})">
+        <input class="mod-name-input" type="text" placeholder="Module name" value="${escHtml(mod.name)}"
+          onclick="event.stopPropagation()"
+          onchange="updateModName(${year}, ${mod.id}, this.value)"
+          oninput="updateModName(${year}, ${mod.id}, this.value)" />
+        <span class="mod-avg">${avg !== null ? avg.toFixed(1) + '%' : '—'}</span>
+        <span class="mod-toggle ${mod.open ? 'open' : ''}">&#x25BE;</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" style="width:${barPct}%;background:${barColor}"></div>
+      </div>
+      <div class="module-body ${mod.open ? 'open' : ''}">
+        <div class="col-headers">
+          <div class="ass-label">Assessment</div>
+          <div class="ass-label" style="text-align:right">Grade %</div>
+          <div class="ass-label" style="text-align:right">Weight %</div>
+          <div></div>
+        </div>
+        ${mod.assessments.map(a => `
+          <div class="assessment-row">
+            <input class="ass-input" type="text" placeholder="e.g. Exam" value="${escHtml(a.name)}"
+              oninput="updateAss(${year}, ${mod.id}, ${a.id}, 'name', this.value)" />
+            <input class="ass-input" type="number" min="0" max="100" placeholder="—" value="${a.grade}"
+              oninput="updateAss(${year}, ${mod.id}, ${a.id}, 'grade', this.value)" />
+            <input class="ass-input" type="number" min="0" max="100" placeholder="—" value="${a.weight}"
+              oninput="updateAss(${year}, ${mod.id}, ${a.id}, 'weight', this.value)" />
+            <button class="del-btn" onclick="removeAssessment(${year}, ${mod.id}, ${a.id})" title="Remove">&#x2715;</button>
+          </div>
+        `).join('')}
+        <div class="weight-warning" id="warn-${mod.id}" style="${showWarning ? 'display:block' : ''}">
+          Weights add up to ${tw.toFixed(0)}% (should be 100%)
+        </div>
+        <button class="add-ass-btn" onclick="addAssessment(${year}, ${mod.id})">+ add assessment</button>
+        <button class="mod-del-btn" onclick="removeModule(${year}, ${mod.id})">&#x2715; remove module</button>
+      </div>
+    `;
+    cont.appendChild(card);
+  });
+}
+
+function renderTargets(y2avg) {
+  const targets = [
+    { id: 't-first', threshold: 70 },
+    { id: 't-21',    threshold: 60 },
+    { id: 't-22',    threshold: 50 },
+    { id: 't-third', threshold: 40 },
+  ];
+  targets.forEach(t => {
+    const el = document.getElementById(t.id);
+    if (y2avg === null) {
+      el.textContent = 'enter Y2 grades first';
+      el.className = 'target-need';
+      return;
+    }
+    const needed = (t.threshold - y2avg * 0.25) / 0.75;
+    if (needed <= 0) {
+      el.textContent = 'already secured';
+      el.className = 'target-need good';
+    } else if (needed > 100) {
+      el.textContent = 'not achievable';
+      el.className = 'target-need bad';
+    } else {
+      el.textContent = `need ${needed.toFixed(1)}% avg in Y3`;
+      el.className = needed <= 60 ? 'target-need good' : 'target-need warn';
+    }
+  });
+}
+
+function recalculate() {
+  const y2avg = calcYearAvg(2);
+  const y3avg = calcYearAvg(3);
+  const y1avg = calcYearAvg(1);
+
+  document.getElementById('y1-avg-badge').textContent = 'avg ' + fmt(y1avg);
+  document.getElementById('y2-avg-badge').textContent = 'avg ' + fmt(y2avg);
+  document.getElementById('y3-avg-badge').textContent = 'avg ' + fmt(y3avg);
+  document.getElementById('hdr-y2').textContent = fmt(y2avg);
+  document.getElementById('hdr-y3').textContent = fmt(y3avg);
+
+  if (y2avg !== null && y3avg !== null) {
+    const final = y2avg * 0.25 + y3avg * 0.75;
+    document.getElementById('hdr-final').textContent = final.toFixed(1) + '%';
+    const cls = classify(final);
+    const pill = document.getElementById('hdr-cls');
+    pill.textContent = cls.label;
+    pill.style.background = cls.bg;
+    pill.style.color = cls.color;
+  } else {
+    document.getElementById('hdr-final').textContent = '—';
+    const pill = document.getElementById('hdr-cls');
+    pill.textContent = '—';
+    pill.style.background = 'rgba(255,255,255,0.12)';
+    pill.style.color = 'rgba(255,255,255,0.5)';
+  }
+
+  renderTargets(y2avg);
+}
+
+function render() {
+  [1, 2, 3].forEach(renderModules);
+  recalculate();
+}
+
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// Init with empty modules
+addModule(2);
+addModule(2);
+addModule(3);
+addModule(3);
+</script>
+</body>
+</html>
