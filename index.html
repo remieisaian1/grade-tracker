@@ -8,6 +8,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="logo.png">
 <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 <div class="container">
   <div class="top-bar">
@@ -15,9 +16,10 @@
       <h1>Degree Grade Tracker</h1>
       <p class="subtitle">Add your modules and weighted assessments — grades calculate automatically</p>
     </div>
+
     <div class="save-bar">
       <span class="save-status" id="save-status">auto-saved</span>
-      <button class="btn btn-danger" onclick="clearData()">clear all</button>
+      <button class="btn btn-danger" id="clear-data-btn">clear all</button>
     </div>
   </div>
 
@@ -25,13 +27,15 @@
     <div class="metric">
       <div class="metric-label">Year 2 avg</div>
       <div class="metric-value" id="y2avg">—</div>
-      <div class="metric-sub">weight: <input class="year-weight-input" id="y2weight" type="number" min="0" max="100" data-weight-year="y2">%</div>
+      <div class="metric-sub" id="y2weightText">weight: 25%</div>
     </div>
+
     <div class="metric">
       <div class="metric-label">Year 3 avg</div>
       <div class="metric-value" id="y3avg">—</div>
-      <div class="metric-sub">weight: <input class="year-weight-input" id="y3weight" type="number" min="0" max="100" data-weight-year="y3">%</div>
+      <div class="metric-sub" id="y3weightText">weight: 75%</div>
     </div>
+
     <div class="metric">
       <div class="metric-label">Final grade</div>
       <div class="metric-value" id="final">—</div>
@@ -39,25 +43,56 @@
     </div>
   </div>
 
+  <div class="weight-card">
+    <div class="weight-card-header">
+      <div>
+        <h2>Year weighting</h2>
+        <p>Change one year and the other updates automatically.</p>
+      </div>
+      <span id="weight-total" class="weight-total">100% total</span>
+    </div>
+
+    <div class="weight-controls">
+      <label class="weight-control" for="y2weight">
+        <span>Year 2</span>
+        <div class="weight-input-wrap">
+          <input class="year-weight-input" id="y2weight" type="number" min="0" max="100" inputmode="decimal" data-weight-year="y2">
+          <span>%</span>
+        </div>
+      </label>
+
+      <label class="weight-control" for="y3weight">
+        <span>Year 3</span>
+        <div class="weight-input-wrap">
+          <input class="year-weight-input" id="y3weight" type="number" min="0" max="100" inputmode="decimal" data-weight-year="y3">
+          <span>%</span>
+        </div>
+      </label>
+    </div>
+  </div>
+
   <div class="tabs">
-    <button class="tab active" onclick="switchTab('y2')">Year 2</button>
-    <button class="tab" onclick="switchTab('y3')">Year 3</button>
-    <button class="tab" onclick="switchTab('targets')">Targets</button>
+    <button class="tab active" data-tab="y2">Year 2</button>
+    <button class="tab" data-tab="y3">Year 3</button>
+    <button class="tab" data-tab="targets">Targets</button>
   </div>
 
   <div id="tab-y2" class="year-panel active"></div>
   <div id="tab-y3" class="year-panel"></div>
+
   <div id="tab-targets" class="year-panel">
-    <div class="card"><div id="targets-content"></div></div>
+    <div class="card">
+      <div id="targets-content"></div>
+    </div>
   </div>
 
-
+  <p class="formula-note" id="formula-note">
+    Final = (Year 2 avg × 25%) + (Year 3 avg × 75%)
+  </p>
 </div>
 
 <div class="toast" id="toast"></div>
 
-
-<script src="script.js"></script>
-
+<script src="script.js" defer></script>
 </body>
 </html>
