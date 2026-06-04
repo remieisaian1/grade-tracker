@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>FAQ | Degree Grade Tracker</title>
+
+  <link rel="icon" type="image/png" sizes="1000x1000" href="../logo.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../logo.png">
+  <link rel="stylesheet" href="../style.css">
+</head>
+
+<body class="faq-page">
+  <div class="container">
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <h1>FAQ</h1>
+        <p class="subtitle">Common questions about Degree Grade Tracker</p>
+      </div>
+
+      <div class="save-bar">
+        <a class="btn" href="../index.html">Back to calculator</a>
+      </div>
+    </div>
+
+    <main class="faq-card">
+      <section class="faq-hero">
+        <span class="faq-label">Help & Contact</span>
+        <h2 class="faq-heading">Frequently asked questions</h2>
+        <p class="faq-intro">
+          Find answers about how the calculator works, how your data is stored, and how to contact us.
+        </p>
+      </section>
+
+      <section class="faq-section">
+        <details class="faq-item" open>
+          <summary>Does this calculator work for every university?</summary>
+          <p>
+            It can work for many universities because you can manually change the Year 2 and Year 3 weighting.
+            However, every university may have different rules, so this should be used as an estimate only.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>What does year weighting mean?</summary>
+          <p>
+            Year weighting is how much each academic year contributes to your final degree grade.
+            For example, some universities use 25% for Year 2 and 75% for Year 3.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Are my grades saved online?</summary>
+          <p>
+            No. Your grades are saved only in your browser using local storage. They are not sent to a server
+            and no account is needed.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Can I clear my saved grades?</summary>
+          <p>
+            Yes. Use the “clear all” button on the calculator page. You can also clear your browser data.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Why is my final grade only an estimate?</summary>
+          <p>
+            Some universities use extra rules such as credit weighting, rounding, compensation, borderline rules,
+            or special classification methods. Always check your official university regulations.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Can I use this for Year 1?</summary>
+          <p>
+            The current version focuses on Year 2 and Year 3 because these are commonly used for final degree
+            classification. If your university includes Year 1, you can adjust the percentages or wait for a future version.
+          </p>
+        </details>
+      </section>
+
+      <section class="contact-section">
+        <span class="faq-label">Contact</span>
+        <h2 class="contact-heading">Send feedback or report a problem</h2>
+        <p class="contact-text">
+          Found a bug, have an idea, or want to suggest a university grading preset? Send a message below.
+        </p>
+
+        <form class="contact-form" action="mailto:your-email@example.com" method="post" enctype="text/plain">
+          <label for="contact-name">Your name</label>
+          <input id="contact-name" name="Name" type="text" placeholder="Your name">
+
+          <label for="contact-email">Your email</label>
+          <input id="contact-email" name="Email" type="email" placeholder="your@email.com">
+
+          <label for="contact-message">Message</label>
+          <textarea id="contact-message" name="Message" rows="6" placeholder="Write your message here..."></textarea>
+
+          <button class="btn contact-submit" type="submit">Send email</button>
+        </form>
+
+        <p class="contact-note">
+          This opens your email app. If it does not work, email us directly at
+          <a href="mailto:your-email@example.com">your-email@example.com</a>.
+        </p>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <h2>Degree Grade Tracker</h2>
+          <p>A simple tool to help students estimate their final university grade.</p>
+        </div>
+
+        <nav class="footer-links" aria-label="Footer navigation">
+          <a href="about.html">About</a>
+          <a href="donation.html">Donation</a>
+          <a href="faq.html" class="footer-link-active">FAQ</a>
+          <a href="privacy.html">Privacy</a>
+        </nav>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 Degree Grade Tracker. Built for students.</p>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
