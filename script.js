@@ -539,10 +539,291 @@ document.body.addEventListener("click", event => {
     return;
   }
 
+  function exportGradesAsPDF() {
+  const y2Average = calcYearAvg("y2");
+  const y3Average = calcYearAvg("y3");
+
+  const y2Weight = yearWeight("y2");
+  const y3Weight = yearWeight("y3");
+
+  const finalGrade = y2Average !== null && y3Average !== null
+    ? y2Average * (y2Weight / 100) + y3Average * (y3Weight / 100)
+    : null;
+
+  const classification = finalGrade !== null
+    ? classify(finalGrade).label
+    : "Not enough grades added";
+
+  const today = new Date().toLocaleDateString("en-GB");
+
+  function moduleRows(year) {
+    return data[year].modules.map(module => {
+      const moduleGrade = calcModuleGrade(module);
+
+      const componentRows = module.components.map(component => {
+        return `
+          <tr>
+            <td>${esc(component.name || "Untitled assessment")}</td>
+            <td>${component.weight || "—"}%</td>
+            <td>${component.grade || "—"}%</td>
+          </tr>
+        `;
+      }).join("");
+
+      return `
+        <section class="report-module">
+          <h3>${esc(module.name || "Untitled module")}</h3>
+          <p class="module-result">
+            Module grade:
+            <strong>${moduleGrade !== null ? moduleGrade.toFixed(1) + "%" : "Not calculated"}</strong>
+          </p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Assessment</th>
+                <th>Weight</th>
+                <th>Grade</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${componentRows}
+            </tbody>
+          </table>
+        </section>
+      `;
+    }).join("");
+  }
+
+  const reportHTML = `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <title>Degree Grade Report</title>
+
+      <style>
+        * {
+          box-sizing: border-box;
+        }
+
+        body {
+          font-family: Arial, sans-serif;
+          color: #1a1a18;
+          background: #ffffff;
+          padding: 32px;
+          line-height: 1.5;
+        }
+
+        .report-container {
+          max-width: 850px;
+          margin: 0 auto;
+        }
+
+        .report-header {
+          border-bottom: 2px solid #111;
+          padding-bottom: 18px;
+          margin-bottom: 24px;
+        }
+
+        .report-header h1 {
+          font-size: 28px;
+          margin-bottom: 6px;
+        }
+
+        .report-header p {
+          color: #555;
+          margin: 0;
+          font-size: 14px;
+        }
+
+        .summary-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 12px;
+          margin-bottom: 28px;
+        }
+
+        .summary-card {
+          border: 1px solid #ddd;
+          border-radius: 10px;
+          padding: 14px;
+          background: #f7f7f7;
+        }
+
+        .summary-card span {
+          display: block;
+          font-size: 12px;
+          color: #666;
+          text-transform: uppercase;
+          margin-bottom: 6px;
+        }
+
+        .summary-card strong {
+          font-size: 22px;
+        }
+
+        .year-section {
+          margin-top: 28px;
+          page-break-inside: avoid;
+        }
+
+        .year-section h2 {
+          font-size: 22px;
+          border-bottom: 1px solid #ddd;
+          padding-bottom: 8px;
+          margin-bottom: 16px;
+        }
+
+        .report-module {
+          border: 1px solid #ddd;
+          border-radius: 10px;
+          padding: 14px;
+          margin-bottom: 14px;
+          page-break-inside: avoid;
+        }
+
+        .report-module h3 {
+          margin-bottom: 6px;
+          font-size: 17px;
+        }
+
+        .module-result {
+          margin-bottom: 10px;
+          color: #555;
+        }
+
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          font-size: 13px;
+        }
+
+        th,
+        td {
+          border: 1px solid #ddd;
+          padding: 8px;
+          text-align: left;
+        }
+
+        th {
+          background: #f0f0f0;
+        }
+
+        .report-note {
+          margin-top: 28px;
+          padding-top: 16px;
+          border-top: 1px solid #ddd;
+          font-size: 12px;
+          color: #666;
+        }
+
+        .print-actions {
+          margin-bottom: 20px;
+        }
+
+        .print-actions button {
+          padding: 10px 16px;
+          border: 1px solid #111;
+          background: #111;
+          color: white;
+          border-radius: 8px;
+          cursor: pointer;
+          font-size: 14px;
+        }
+
+        @media print {
+          body {
+            padding: 0;
+          }
+
+          .print-actions {
+            display: none;
+          }
+
+          .report-container {
+            max-width: none;
+          }
+        }
+      </style>
+    </head>
+
+    <body>
+      <div class="report-container">
+        <div class="print-actions">
+          <button onclick="window.print()">Save / Print PDF</button>
+        </div>
+
+        <header class="report-header">
+          <h1>Degree Grade Report</h1>
+          <p>Generated on ${today} using Degree Grade Tracker.</p>
+        </header>
+
+        <section class="summary-grid">
+          <div class="summary-card">
+            <span>Year 2 average</span>
+            <strong>${y2Average !== null ? y2Average.toFixed(1) + "%" : "—"}</strong>
+            <p>Weight: ${y2Weight}%</p>
+          </div>
+
+          <div class="summary-card">
+            <span>Year 3 average</span>
+            <strong>${y3Average !== null ? y3Average.toFixed(1) + "%" : "—"}</strong>
+            <p>Weight: ${y3Weight}%</p>
+          </div>
+
+          <div class="summary-card">
+            <span>Final grade</span>
+            <strong>${finalGrade !== null ? finalGrade.toFixed(1) + "%" : "—"}</strong>
+            <p>${classification}</p>
+          </div>
+        </section>
+
+        <section class="year-section">
+          <h2>Year 2 Modules</h2>
+          ${moduleRows("y2")}
+        </section>
+
+        <section class="year-section">
+          <h2>Year 3 Modules</h2>
+          ${moduleRows("y3")}
+        </section>
+
+        <p class="report-note">
+          This report is an estimate only. Universities may use different rules for credits,
+          rounding, compensation, borderline classifications, or final degree calculations.
+          Always check your official university regulations.
+        </p>
+      </div>
+    </body>
+    </html>
+  `;
+
+  const printWindow = window.open("", "_blank");
+
+  if (!printWindow) {
+    alert("Your browser blocked the PDF window. Please allow pop-ups for this website and try again.");
+    return;
+  }
+
+  printWindow.document.open();
+  printWindow.document.write(reportHTML);
+  printWindow.document.close();
+
+  printWindow.onload = function () {
+    printWindow.focus();
+    printWindow.print();
+  };
+}
+if (event.target.closest("#export-pdf-btn")) {
+  exportGradesAsPDF();
+  return;
+}
   if (event.target.closest("#clear-data-btn")) {
     clearData();
     return;
   }
+
 
   const element = event.target.closest("[data-action]");
 

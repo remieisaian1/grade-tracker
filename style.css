@@ -116,6 +116,16 @@ body {
     font-size: 13.5px;
   }
 }
+@media (max-width: 480px) {
+  .save-bar {
+    flex-wrap: wrap;
+  }
+
+  #export-pdf-btn,
+  #clear-data-btn {
+    flex: 1;
+  }
+}
 
 .top-bar {
   display: flex;
