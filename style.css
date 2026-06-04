@@ -59,6 +59,64 @@ body {
   margin: 0 auto;
 }
 
+/* =========================
+   Homepage Intro Section
+========================= */
+
+.intro-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.intro-label {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--blue);
+  background: var(--blue-bg);
+  padding: 5px 10px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+}
+
+.intro-card h2 {
+  font-size: 22px;
+  line-height: 1.2;
+  letter-spacing: -0.4px;
+  margin-bottom: 10px;
+}
+
+.intro-card p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text2);
+  margin-bottom: 10px;
+}
+
+.intro-card p:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 480px) {
+  .intro-card {
+    padding: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .intro-card h2 {
+    font-size: 20px;
+  }
+
+  .intro-card p {
+    font-size: 13.5px;
+  }
+}
+
 .top-bar {
   display: flex;
   align-items: flex-start;
@@ -1002,6 +1060,7 @@ body {
     font-size: 13.5px;
   }
 }
+
 /* =========================
    FAQ Page Styling
 ========================= */
