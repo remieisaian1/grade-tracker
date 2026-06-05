@@ -1,12 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Degree Grade Tracker</title>
-<link rel="icon" type="image/png" sizes="1000x1000" href="logo.png">
-<link rel="apple-touch-icon" sizes="180x180" href="logo.png">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>UK University Grade Calculator | Degree Grade Tracker</title>
+
+  <meta
+    name="description"
+    content="Free UK university grade calculator for students. Calculate module grades, credit-weighted year averages, final degree results, and target grades."
+  />
+
+  <meta
+    name="keywords"
+    content="UK university grade calculator, degree grade calculator, credit weighted average, final degree calculator, module grade calculator, 2:1 calculator, first class calculator"
+  />
+
+  <meta name="author" content="Degree Grade Tracker" />
+
+  <link rel="icon" type="image/png" sizes="1000x1000" href="logo.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="logo.png">
+
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -95,23 +110,26 @@
   </div>
 
 
-  <section class="module-help-card">
-  <h2>How to enter your grades</h2>
+<section class="module-help-card">
+  <div class="module-help-content">
+    <h2>How to use the calculator</h2>
 
-  <p>
-    Add each module you are studying, then enter the module credits, assessment weights,
-    and the grade you received for each assessment.
-  </p>
+    <ol class="module-help-steps">
+      <li>Add your modules for each year.</li>
+      <li>Enter the credits for each module.</li>
+      <li>Add each assessment with its weight and grade.</li>
+      <li>Adjust the Year 2 and Year 3 weighting if needed.</li>
+      <li>Check your estimated final grade and targets.</li>
+    </ol>
 
-  <p>
-    For example, if a module has coursework worth 40% and an exam worth 60%, enter both
-    assessments separately. The calculator will work out your module grade, then use the
-    module credits to calculate your year average.
-  </p>
+    <p class="module-help-note">
+      If you do not know your credits, keep the same credit value for each module.
+    </p>
+  </div>
 
-  <p class="module-help-note">
-    Tip: If you are not sure about credits, leave each module as the same credit value so they are treated equally.
-  </p>
+  <a class="btn video-help-btn" href="pages/how-it-works.html">
+    Learn more
+  </a>
 </section>
 
   <div id="tab-y2" class="year-panel active"></div>
@@ -132,7 +150,8 @@
 
     <nav class="footer-links" aria-label="Footer navigation">
       <a href="pages/about.html">About</a>
-      <a href="donation.html">Donation</a>
+      <a href="pages/how-it-works.html">How it works</a>
+      <a href="pages/donation.html">Donation</a>
       <a href="pages/faq.html">FAQ</a>
       <a href="pages/privacy.html">Privacy</a>
     </nav>

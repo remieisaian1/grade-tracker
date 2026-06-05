@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>How It Works | Degree Grade Tracker</title>
+
+  <link rel="icon" type="image/png" sizes="1000x1000" href="../logo.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../logo.png">
+  <link rel="stylesheet" href="../style.css">
+</head>
+
+<body class="how-page">
+  <div class="container">
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <h1>How It Works</h1>
+        <p class="subtitle">Learn how to use the calculator and understand the maths behind it</p>
+      </div>
+
+      <div class="save-bar">
+        <a class="btn" href="../index.html">Back to calculator</a>
+      </div>
+    </div>
+
+    <main class="how-card">
+      <section class="how-hero">
+        <span class="how-label">Guide</span>
+        <h2>How to calculate your university grade</h2>
+        <p>
+          This page explains how to enter your modules, credits, assessment weights,
+          and year weightings to estimate your final degree grade.
+        </p>
+      </section>
+
+      <section class="how-video-section">
+        <div class="video-placeholder">
+          <div>
+            <span>Video guide coming soon</span>
+            <p>Your YouTube tutorial will appear here once you upload it.</p>
+          </div>
+        </div>
+
+        <!-- Later, replace the placeholder above with this iframe:
+
+        <div class="video-frame-wrap static-video">
+          <iframe
+            src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+            title="How to use Degree Grade Tracker"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+          </iframe>
+        </div>
+
+        -->
+      </section>
+
+      <section class="how-section">
+        <h3>1. Add your modules</h3>
+        <p>
+          Start by adding the modules you are taking in Year 2 and Year 3.
+          A module could be something like Web Development, Databases, Networking,
+          Final Year Project, or Dissertation.
+        </p>
+      </section>
+
+      <section class="how-section">
+        <h3>2. Enter module credits</h3>
+        <p>
+          Credits show how large a module is. A 30-credit module counts twice as much
+          as a 15-credit module when calculating your year average.
+        </p>
+
+        <div class="how-example">
+          <p><strong>Example:</strong></p>
+          <p>Module A: 70% with 30 credits</p>
+          <p>Module B: 60% with 15 credits</p>
+          <p>Module A will have more impact because it has more credits.</p>
+        </div>
+      </section>
+
+      <section class="how-section">
+        <h3>3. Add assessments, weights, and grades</h3>
+        <p>
+          Inside each module, add your assessments. For example, a module might have
+          coursework worth 40% and an exam worth 60%.
+        </p>
+
+        <div class="how-formula">
+          Module grade = assessment mark × assessment weight
+        </div>
+
+        <p>
+          Example: if coursework is 70% and worth 40%, and the exam is 60% and worth 60%:
+        </p>
+
+        <div class="how-formula">
+          Module grade = (70 × 0.4) + (60 × 0.6) = 64%
+        </div>
+      </section>
+
+      <section class="how-section">
+        <h3>4. Understand credit-weighted averages</h3>
+        <p>
+          Your year average is calculated using module credits. This means bigger modules
+          affect your year average more.
+        </p>
+
+        <div class="how-formula">
+          Year average = sum(module mark × module credits) ÷ total credits
+        </div>
+      </section>
+
+      <section class="how-section">
+        <h3>5. Adjust year weighting</h3>
+        <p>
+          Different universities use different year weightings. Some may use 25% for Year 2
+          and 75% for Year 3, while others may use 20% and 80%, or another method.
+        </p>
+
+        <p>
+          The calculator lets you manually change the year weighting so it can fit more
+          universities.
+        </p>
+      </section>
+
+      <section class="how-section how-warning">
+        <h3>Important note</h3>
+        <p>
+          This calculator gives an estimate only. Universities may use different rules for
+          rounding, credits, compensation, resits, borderline classifications, or dropped
+          credits. Always check your official university regulations.
+        </p>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <h2>Degree Grade Tracker</h2>
+          <p>A simple tool to help students estimate their final university grade.</p>
+        </div>
+
+        <nav class="footer-links" aria-label="Footer navigation">
+          <a href="about.html">About</a>
+          <a href="donation.html">Donation</a>
+          <a href="faq.html">FAQ</a>
+          <a href="privacy.html">Privacy</a>
+        </nav>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 Degree Grade Tracker. Built for students.</p>
+      </div>
+    </footer>
+  </div>
+   <script src="../script.js" defer></script>
+</body>
+</html>
