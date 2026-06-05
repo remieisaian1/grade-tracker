@@ -1801,3 +1801,268 @@ body {
     font-size: 13px;
   }
 }
+
+/* =========================
+   Information Centre Page
+========================= */
+
+.info-page .container {
+  max-width: 900px;
+}
+
+.info-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 2rem;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.04);
+}
+
+.info-hero {
+  margin-bottom: 1.75rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.info-label {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--blue);
+  background: var(--blue-bg);
+  padding: 5px 10px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+}
+
+.info-hero h2 {
+  font-size: 30px;
+  line-height: 1.15;
+  letter-spacing: -0.7px;
+  margin-bottom: 12px;
+}
+
+.info-hero p {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--text2);
+  max-width: 740px;
+}
+
+.info-warning-text {
+  margin-top: 12px;
+  font-weight: 700;
+  color: var(--amber) !important;
+}
+
+.info-section {
+  padding: 1.35rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.info-section:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.info-section h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  letter-spacing: -0.2px;
+}
+
+.info-section p {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--text2);
+  margin-bottom: 10px;
+}
+
+.info-section p:last-child {
+  margin-bottom: 0;
+}
+
+.info-example,
+.info-warning-box {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin: 12px 0;
+}
+
+.info-example p,
+.info-warning-box p {
+  margin-bottom: 5px;
+}
+
+.info-warning-box {
+  background: var(--amber-bg);
+  border-color: rgba(133, 79, 11, 0.18);
+}
+
+.info-warning-box p {
+  color: var(--amber);
+  font-weight: 700;
+}
+
+.info-formula {
+  background: var(--blue-bg);
+  color: var(--blue);
+  border: 1px solid rgba(12, 68, 124, 0.18);
+  border-radius: var(--radius);
+  padding: 0.95rem 1rem;
+  margin: 12px 0;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.6;
+}
+
+.info-table-wrap {
+  overflow-x: auto;
+  margin: 14px 0;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+.info-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 520px;
+  background: var(--surface);
+}
+
+.info-table th,
+.info-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  font-size: 13px;
+}
+
+.info-table th {
+  background: var(--surface2);
+  color: var(--text);
+  font-weight: 800;
+}
+
+.info-table td {
+  color: var(--text2);
+}
+
+.info-table tr:last-child td {
+  border-bottom: none;
+}
+
+.uni-rules-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.uni-rule-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+}
+
+.uni-rule-card h4 {
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+.uni-rule-card p {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text2);
+  margin-bottom: 10px;
+}
+
+.uni-rule-card a {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--blue);
+  text-decoration: none;
+}
+
+.uni-rule-card a:hover {
+  text-decoration: underline;
+}
+
+.info-list {
+  padding-left: 1.2rem;
+  margin-top: 8px;
+}
+
+.info-list li {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--text2);
+  margin-bottom: 4px;
+}
+
+.info-cta {
+  background: var(--green-bg);
+  border: 1px solid rgba(39, 80, 10, 0.18);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin-top: 1.25rem;
+}
+
+.info-cta h3 {
+  color: var(--green);
+}
+
+.info-cta p {
+  color: var(--green);
+  font-weight: 600;
+}
+
+.info-cta-btn {
+  display: inline-block;
+  margin-top: 12px;
+  background: var(--surface);
+  color: var(--green);
+  border-color: rgba(39, 80, 10, 0.25);
+  text-decoration: none;
+  font-weight: 800;
+}
+
+@media (max-width: 800px) {
+  .uni-rules-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .info-card {
+    padding: 1.25rem;
+    border-radius: 14px;
+  }
+
+  .info-hero h2 {
+    font-size: 24px;
+  }
+
+  .info-hero p,
+  .info-section p,
+  .info-list li {
+    font-size: 13.5px;
+  }
+
+  .info-section {
+    padding: 1rem 0;
+  }
+
+  .info-formula {
+    font-size: 13px;
+  }
+
+  .info-table {
+    min-width: 480px;
+  }
+}
