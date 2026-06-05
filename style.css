@@ -1425,3 +1425,106 @@ body {
     line-height: 1.5;
   }
 }
+
+.module-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.credit-control {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 3px 6px;
+}
+
+.credit-control span {
+  font-size: 10px;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.credit-input {
+  width: 48px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 4px 5px;
+  font-size: 12px;
+  color: var(--text);
+  font-family: inherit;
+  text-align: center;
+  font-weight: 700;
+}
+
+.credit-input:focus {
+  outline: none;
+  border-color: var(--border2);
+}
+
+@media (max-width: 520px) {
+  .card-header {
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .module-actions {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+  }
+
+  .credit-control {
+    padding: 5px 7px;
+  }
+
+  .credit-input {
+    width: 58px;
+    min-height: 32px;
+  }
+}
+
+.module-help-card {
+  background: var(--blue-bg);
+  border: 1px solid rgba(12, 68, 124, 0.18);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.module-help-card h2 {
+  font-size: 15px;
+  margin-bottom: 8px;
+  color: var(--blue);
+}
+
+.module-help-card p {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text2);
+  margin-bottom: 8px;
+}
+
+.module-help-card p:last-child {
+  margin-bottom: 0;
+}
+
+.module-help-note {
+  font-weight: 700;
+  color: var(--blue) !important;
+}
+
+@media (max-width: 480px) {
+  .module-help-card {
+    padding: 0.9rem;
+  }
+
+  .module-help-card p {
+    font-size: 13px;
+  }
+}

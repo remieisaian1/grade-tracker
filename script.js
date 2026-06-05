@@ -12,6 +12,7 @@ const newComp = () => ({
 const newModule = name => ({
   id: nid++,
   name,
+  credits: 15,
   components: [newComp()]
 });
 
@@ -49,6 +50,12 @@ function loadData() {
         y3: 75
       };
     }
+
+    [...parsed.y2.modules, ...parsed.y3.modules].forEach(module => {
+      if (!module.credits) {
+        module.credits = 15;
+      }
+    });
 
     const allIds = [...parsed.y2.modules, ...parsed.y3.modules]
       .flatMap(module => [
@@ -145,15 +152,34 @@ function calcModuleGrade(module) {
 }
 
 function calcYearAvg(year) {
-  const grades = data[year].modules
-    .map(calcModuleGrade)
-    .filter(grade => grade !== null);
+  const validModules = data[year].modules
+    .map(module => {
+      return {
+        grade: calcModuleGrade(module),
+        credits: Number(module.credits) || 0
+      };
+    })
+    .filter(module => module.grade !== null && module.credits > 0);
 
-  if (!grades.length) {
+  if (!validModules.length) {
     return null;
   }
 
-  return grades.reduce((sum, grade) => sum + grade, 0) / grades.length;
+  const totalCredits = validModules.reduce((sum, module) => {
+    return sum + module.credits;
+  }, 0);
+
+  const weightedTotal = validModules.reduce((sum, module) => {
+    return sum + module.grade * module.credits;
+  }, 0);
+
+  return weightedTotal / totalCredits;
+}
+
+function calcYearCredits(year) {
+  return data[year].modules.reduce((sum, module) => {
+    return sum + (Number(module.credits) || 0);
+  }, 0);
 }
 
 function clampWeight(value) {
@@ -230,13 +256,16 @@ function recalculate() {
   document.getElementById("y2weight").value = w2;
   document.getElementById("y3weight").value = w3;
 
-  document.getElementById("y2weightText").textContent = "weight: " + w2 + "%";
-  document.getElementById("y3weightText").textContent = "weight: " + w3 + "%";
+  document.getElementById("y2weightText").textContent =
+    "weight: " + w2 + "% · credits: " + calcYearCredits("y2");
+
+  document.getElementById("y3weightText").textContent =
+    "weight: " + w3 + "% · credits: " + calcYearCredits("y3");
 
   document.getElementById("weight-total").textContent = w2 + w3 + "% total";
 
   document.getElementById("formula-note").textContent =
-    "Final = (Year 2 avg × " + w2 + "%) + (Year 3 avg × " + w3 + "%)";
+    "Final = (credit-weighted Year 2 avg × " + w2 + "%) + (credit-weighted Year 3 avg × " + w3 + "%)";
 
   if (y2 !== null && y3 !== null) {
     const finalGrade = y2 * (w2 / 100) + y3 * (w3 / 100);
@@ -304,7 +333,7 @@ function renderTargets() {
       text = "not achievable";
       cls = "need-no";
     } else {
-      text = "need " + needed.toFixed(1) + "% avg in Year 3";
+      text = "need " + needed.toFixed(1) + "% credit-weighted avg in Year 3";
       cls = "need-num";
     }
 
@@ -350,10 +379,24 @@ function renderYear(year) {
             data-field="mname"
           />
 
-          <div style="display:flex;align-items:center;gap:6px">
+          <div class="module-actions">
             <span class="module-grade" id="badge-${year}-${module.id}">
               ${grade !== null ? grade.toFixed(1) + "%" : "—"}
             </span>
+
+            <label class="credit-control">
+              <span>credits</span>
+              <input
+                class="credit-input"
+                type="number"
+                min="0"
+                placeholder="15"
+                value="${esc(module.credits || 15)}"
+                data-yr="${year}"
+                data-mid="${module.id}"
+                data-field="credits"
+              />
+            </label>
 
             <button
               class="del-mod-btn"
@@ -485,61 +528,7 @@ function refreshModuleBadge(year, moduleId) {
   }
 }
 
-function render() {
-  renderYear("y2");
-  renderYear("y3");
-  recalculate();
-}
-
-document.body.addEventListener("input", event => {
-  const element = event.target;
-
-  if (element.dataset.weightYear) {
-    setYearWeight(element.dataset.weightYear, element.value);
-    recalculate();
-    saveData();
-    return;
-  }
-
-  const year = element.dataset.yr;
-  const moduleId = Number(element.dataset.mid);
-  const componentId = Number(element.dataset.cid);
-  const field = element.dataset.field;
-
-  if (!year || !field) {
-    return;
-  }
-
-  const module = data[year].modules.find(item => item.id === moduleId);
-
-  if (!module) {
-    return;
-  }
-
-  if (field === "mname") {
-    module.name = element.value;
-  } else {
-    const component = module.components.find(item => item.id === componentId);
-
-    if (component) {
-      component[field] = element.value;
-    }
-  }
-
-  refreshModuleBadge(year, moduleId);
-  recalculate();
-  saveData();
-});
-
-document.body.addEventListener("click", event => {
-  const tabButton = event.target.closest("[data-tab]");
-
-  if (tabButton) {
-    switchTab(tabButton.dataset.tab);
-    return;
-  }
-
-  function exportGradesAsPDF() {
+function exportGradesAsPDF() {
   const y2Average = calcYearAvg("y2");
   const y3Average = calcYearAvg("y3");
 
@@ -574,7 +563,9 @@ document.body.addEventListener("click", event => {
         <section class="print-module">
           <h3>${esc(module.name || "Untitled module")}</h3>
           <p>
-            Module grade:
+            Credits:
+            <strong>${module.credits || "—"}</strong>
+            · Module grade:
             <strong>${moduleGrade !== null ? moduleGrade.toFixed(1) + "%" : "Not calculated"}</strong>
           </p>
 
@@ -606,13 +597,13 @@ document.body.addEventListener("click", event => {
         <div>
           <span>Year 2 average</span>
           <strong>${y2Average !== null ? y2Average.toFixed(1) + "%" : "—"}</strong>
-          <p>Weight: ${y2Weight}%</p>
+          <p>Weight: ${y2Weight}% · Credits: ${calcYearCredits("y2")}</p>
         </div>
 
         <div>
           <span>Year 3 average</span>
           <strong>${y3Average !== null ? y3Average.toFixed(1) + "%" : "—"}</strong>
-          <p>Weight: ${y3Weight}%</p>
+          <p>Weight: ${y3Weight}% · Credits: ${calcYearCredits("y3")}</p>
         </div>
 
         <div>
@@ -654,10 +645,67 @@ document.body.addEventListener("click", event => {
     window.print();
   }, 100);
 }
-if (event.target.closest("#export-pdf-btn")) {
-  exportGradesAsPDF();
-  return;
+
+function render() {
+  renderYear("y2");
+  renderYear("y3");
+  recalculate();
 }
+
+document.body.addEventListener("input", event => {
+  const element = event.target;
+
+  if (element.dataset.weightYear) {
+    setYearWeight(element.dataset.weightYear, element.value);
+    recalculate();
+    saveData();
+    return;
+  }
+
+  const year = element.dataset.yr;
+  const moduleId = Number(element.dataset.mid);
+  const componentId = Number(element.dataset.cid);
+  const field = element.dataset.field;
+
+  if (!year || !field) {
+    return;
+  }
+
+  const module = data[year].modules.find(item => item.id === moduleId);
+
+  if (!module) {
+    return;
+  }
+
+  if (field === "mname") {
+    module.name = element.value;
+  } else if (field === "credits") {
+    module.credits = element.value;
+  } else {
+    const component = module.components.find(item => item.id === componentId);
+
+    if (component) {
+      component[field] = element.value;
+    }
+  }
+
+  refreshModuleBadge(year, moduleId);
+  recalculate();
+  saveData();
+});
+
+document.body.addEventListener("click", event => {
+  const tabButton = event.target.closest("[data-tab]");
+
+  if (tabButton) {
+    switchTab(tabButton.dataset.tab);
+    return;
+  }
+
+  if (event.target.closest("#export-pdf-btn")) {
+    exportGradesAsPDF();
+    return;
+  }
 
   if (event.target.closest("#clear-data-btn")) {
     clearData();
