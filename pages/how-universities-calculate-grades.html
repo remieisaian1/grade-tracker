@@ -1,25 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<header class="site-header">
+  <a class="site-logo" href="../index.html">
+    Degree Grade Tracker
+  </a>
 
-  <title>How UK Universities Calculate Grades | Degree Grade Tracker</title>
+  <div class="site-header-actions">
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode">
+      <span id="theme-icon">🌙</span>
+    </button>
 
-  <meta
-    name="description"
-    content="Learn how UK universities usually calculate degree grades using assessment weights, module credits, credit-weighted averages, year weighting, and classification boundaries."
-  />
+    <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
 
-  <meta
-    name="keywords"
-    content="how universities calculate grades, UK university grade calculation, credit weighted average, degree classification, module credits, final degree calculator"
-  />
-
-  <link rel="icon" type="image/png" sizes="1000x1000" href="../logo.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="../logo.png">
-  <link rel="stylesheet" href="../style.css">
-</head>
+  <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+    <a href="../index.html">Calculator</a>
+    <a href="how-universities-calculate-grades.html" class="nav-active">Grade guide</a>
+    <a href="how-it-works.html">How it works</a>
+  </nav>
+</header>
 
 <body class="info-page">
   <div class="container">
@@ -405,5 +408,6 @@
       </div>
     </footer>
   </div>
+  <script src="../script.js" defer></script>
 </body>
 </html>

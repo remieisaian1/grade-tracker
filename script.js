@@ -758,4 +758,61 @@ document.body.addEventListener("click", event => {
   }
 });
 
+
+function setupNavigation() {
+  const navToggle = document.getElementById("nav-toggle");
+  const siteNav = document.getElementById("site-nav");
+
+  if (!navToggle || !siteNav) {
+    return;
+  }
+
+  navToggle.addEventListener("click", () => {
+    const isOpen = siteNav.classList.toggle("show");
+
+    navToggle.classList.toggle("active", isOpen);
+    navToggle.setAttribute("aria-expanded", String(isOpen));
+  });
+}
+
+function setupThemeToggle() {
+  const themeToggle = document.getElementById("theme-toggle");
+  const themeIcon = document.getElementById("theme-icon");
+
+  if (!themeToggle || !themeIcon) {
+    return;
+  }
+
+  const savedTheme = localStorage.getItem("degree-tracker-theme");
+
+  if (savedTheme) {
+    document.documentElement.setAttribute("data-theme", savedTheme);
+  }
+
+  function updateThemeIcon() {
+    const currentTheme = document.documentElement.getAttribute("data-theme");
+
+    if (currentTheme === "dark") {
+      themeIcon.textContent = "☀️";
+    } else {
+      themeIcon.textContent = "🌙";
+    }
+  }
+
+  updateThemeIcon();
+
+  themeToggle.addEventListener("click", () => {
+    const currentTheme = document.documentElement.getAttribute("data-theme");
+    const newTheme = currentTheme === "dark" ? "light" : "dark";
+
+    document.documentElement.setAttribute("data-theme", newTheme);
+    localStorage.setItem("degree-tracker-theme", newTheme);
+
+    updateThemeIcon();
+  });
+}
+
+setupNavigation();
+setupThemeToggle();
+
 render();

@@ -14,12 +14,24 @@
 
 <body class="about-page">
   <div class="container">
-    <header class="site-header">
+<header class="site-header">
   <a class="site-logo" href="../index.html">
     Degree Grade Tracker
   </a>
 
-  <nav class="site-nav" aria-label="Main navigation">
+  <div class="site-header-actions">
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode">
+      <span id="theme-icon">🌙</span>
+    </button>
+
+    <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+
+  <nav class="site-nav" id="site-nav" aria-label="Main navigation">
     <a href="../index.html">Calculator</a>
     <a href="how-universities-calculate-grades.html">Grade guide</a>
     <a href="how-it-works.html">How it works</a>
