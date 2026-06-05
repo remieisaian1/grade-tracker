@@ -4,7 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>FAQ | Degree Grade Tracker</title>
+  <title>FAQ | UK University Grade Calculator</title>
+
+  <meta
+    name="description"
+    content="Frequently asked questions about calculating UK university grades, credit-weighted averages, Year 2 and Year 3 weighting, First Class degrees, 2:1 grades, and data privacy."
+  />
 
   <link rel="icon" type="image/png" sizes="1000x1000" href="../logo.png">
   <link rel="apple-touch-icon" sizes="180x180" href="../logo.png">
@@ -13,21 +18,23 @@
 
 <body class="faq-page">
   <div class="container">
-    <header class="site-header">
-  <a class="site-logo" href="../index.html">
-    Degree Grade Tracker
-  </a>
 
-  <nav class="site-nav" aria-label="Main navigation">
-    <a href="../index.html">Calculator</a>
-    <a href="how-universities-calculate-grades.html">Grade guide</a>
-    <a href="how-it-works.html">How it works</a>
-  </nav>
-</header>
+    <header class="site-header">
+      <a class="site-logo" href="../index.html">
+        Degree Grade Tracker
+      </a>
+
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="../index.html">Calculator</a>
+        <a href="how-universities-calculate-grades.html">Grade guide</a>
+        <a href="how-it-works.html">How it works</a>
+      </nav>
+    </header>
+
     <div class="top-bar">
       <div class="top-bar-left">
         <h1>FAQ</h1>
-        <p class="subtitle">Common questions about Degree Grade Tracker</p>
+        <p class="subtitle">Common questions about calculating university grades</p>
       </div>
 
       <div class="save-bar">
@@ -37,67 +44,128 @@
 
     <main class="faq-card">
       <section class="faq-hero">
-        <span class="faq-label">Help & Contact</span>
-        <h2 class="faq-heading">Frequently asked questions</h2>
+        <span class="faq-label">Help centre</span>
+        <h2>Frequently asked questions</h2>
         <p class="faq-intro">
-          Find answers about how the calculator works, how your data is stored, and how to contact us.
+          Find answers about university grade calculations, credits, year weighting,
+          degree classifications, privacy, and how to use Degree Grade Tracker.
         </p>
       </section>
 
       <section class="faq-section">
         <details class="faq-item" open>
-          <summary>Does this calculator work for every university?</summary>
+          <summary>How do I calculate my university grade?</summary>
           <p>
-            It can work for many universities because you can manually change the Year 2 and Year 3 weighting.
-            However, every university may have different rules, so this should be used as an estimate only.
+            First, calculate each module mark using the assessment weights. Then multiply each
+            module mark by its credits, add those results together, and divide by the total credits.
+            This gives your credit-weighted year average. Your final degree estimate is then calculated
+            using the year weighting.
           </p>
         </details>
 
         <details class="faq-item">
-          <summary>What does year weighting mean?</summary>
+          <summary>What is a credit-weighted average?</summary>
           <p>
-            Year weighting is how much each academic year contributes to your final degree grade.
-            For example, some universities use 25% for Year 2 and 75% for Year 3.
+            A credit-weighted average means larger modules count more towards your overall average.
+            For example, a 30-credit module counts twice as much as a 15-credit module.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>What are module credits?</summary>
+          <p>
+            Credits show the size or value of a module. A module with more credits has more impact
+            on your year average. If you do not know your credits, you can keep the same credit value
+            for every module so they are treated equally.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Do Year 2 and Year 3 count towards my final degree?</summary>
+          <p>
+            Many UK universities use Year 2 and Year 3 to calculate the final degree classification,
+            but the exact weighting depends on the university and course. Some universities may use
+            25% for Year 2 and 75% for Year 3, while others may use 20% and 80%, or another method.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Can I change the Year 2 and Year 3 weighting?</summary>
+          <p>
+            Yes. Degree Grade Tracker lets you manually change the Year 2 and Year 3 weighting.
+            When you change one year, the other updates automatically so the total stays at 100%.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>What grade do I need for a First?</summary>
+          <p>
+            A First Class degree is usually awarded for a final average of 70% or above. However,
+            universities may also use extra rules for rounding, credits, borderline marks, or
+            final-year performance.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>What grade do I need for a 2:1?</summary>
+          <p>
+            A 2:1, also called an Upper Second Class degree, is usually awarded for a final average
+            of 60% to 69%. Some universities may have borderline rules if you are close to the next
+            classification.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Does this calculator work for every university?</summary>
+          <p>
+            It can be used as a general estimate because you can change module credits and year
+            weightings manually. However, every university can have different regulations, so you
+            should always check your official course handbook or academic regulations.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Why might my real university result be different?</summary>
+          <p>
+            Your official result may be different because universities can use extra rules such as
+            dropped credits, best-credit calculations, rounding rules, compensation, resit caps,
+            and borderline classification rules.
           </p>
         </details>
 
         <details class="faq-item">
           <summary>Are my grades saved online?</summary>
           <p>
-            No. Your grades are saved only in your browser using local storage. They are not sent to a server
-            and no account is needed.
+            No. Your grades are saved only in your own browser using local storage. Your module names,
+            credits, assessment weights, and marks are not sent to a server.
           </p>
         </details>
 
         <details class="faq-item">
           <summary>Can I clear my saved grades?</summary>
           <p>
-            Yes. Use the “clear all” button on the calculator page. You can also clear your browser data.
+            Yes. Use the “clear all” button on the calculator page. This removes the saved data from
+            your browser.
           </p>
         </details>
 
         <details class="faq-item">
-          <summary>Why is my final grade only an estimate?</summary>
+          <summary>Is Degree Grade Tracker official?</summary>
           <p>
-            Some universities use extra rules such as credit weighting, rounding, compensation, borderline rules,
-            or special classification methods. Always check your official university regulations.
-          </p>
-        </details>
-
-        <details class="faq-item">
-          <summary>Can I use this for Year 1?</summary>
-          <p>
-            The current version focuses on Year 2 and Year 3 because these are commonly used for final degree
-            classification. If your university includes Year 1, you can adjust the percentages or wait for a future version.
+            No. Degree Grade Tracker is an independent student tool. It is designed to help you estimate
+            your grade, but your official result will always come from your university.
           </p>
         </details>
       </section>
 
       <section class="contact-section">
         <span class="faq-label">Contact</span>
+
         <h2 class="contact-heading">Send feedback or report a problem</h2>
+
         <p class="contact-text">
-          Found a bug, have an idea, or want to suggest a university grading preset? Send a message below.
+          Found a bug, have an idea, or want to suggest a university grading preset?
+          Send a message below.
         </p>
 
         <form class="contact-form" action="mailto:your-email@example.com" method="post" enctype="text/plain">
@@ -127,13 +195,13 @@
           <p>A simple tool to help students estimate their final university grade.</p>
         </div>
 
-    <nav class="footer-links" aria-label="Footer navigation">
-      <a href="about.html">About</a>
-      <a href="how-it-works.html">How it works</a>
-      <a href="donation.html">Donation</a>
-      <a href="faq.html">FAQ</a>
-      <a href="privacy.html">Privacy</a>
-    </nav>
+        <nav class="footer-links" aria-label="Footer navigation">
+          <a href="about.html">About</a>
+          <a href="how-it-works.html">How it works</a>
+          <a href="how-universities-calculate-grades.html">Grade guide</a>
+          <a href="faq.html" class="footer-link-active">FAQ</a>
+          <a href="privacy.html">Privacy</a>
+        </nav>
       </div>
 
       <div class="footer-bottom">
@@ -141,5 +209,7 @@
       </div>
     </footer>
   </div>
+
+  <script src="../seo.js" defer></script>
 </body>
 </html>

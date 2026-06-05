@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://remieisaian1.github.io/grade-tracker/sitemap.xml
